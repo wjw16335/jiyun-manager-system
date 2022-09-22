@@ -1,27 +1,67 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Login from "../views/login";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/login",
+    name: "login",
+    component: Login,
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path : "/",
+    name : "layout",
+    redirect: '/index',  // 重定向:重新指向其它path,会改变网址
+    component: () => import("../layout"),
+    children:[
+      {
+        path: "index",
+        name: "index",
+        component: () => import("../views/index"),
+        meta:{
+          title:"首页"
+        }
+      },
+      {
+        path: "member",
+        name: "member",
+        component: () => import("../views/member"),
+        meta:{
+          title:"会员管理"
+        }
+      },
+      {
+        path: "supplier",
+        name: "supplier",
+        component: () => import("../views/supplier"),
+        meta:{
+          title:"供应商管理"
+        }
+      },
+      {
+        path: "goods",
+        name: "goods",
+        component: () => import("../views/goods"),
+        meta:{
+          title:"商品管理"
+        }
+      },
+      {
+        path: "staff",
+        name: "staff",
+        component: () => import("../views/staff"),
+        meta:{
+          title:"员工管理"
+        }
+      },
+    ],
   }
-]
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
